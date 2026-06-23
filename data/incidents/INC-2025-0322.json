@@ -1,0 +1,13 @@
+{
+  "id": "INC-2025-0322",
+  "title": "Silent blackhole on PE-Router-03",
+  "event_type": "TRAFFIC_BLACKHOLE",
+  "device": "PE-Router-03",
+  "summary": "Healthy counters but Telemetry-Feed-C throughput dropped to near zero.",
+  "root_cause": "Stale LFIB label binding after a routing change.",
+  "resolution": "clear ip route * rebuilt FIB; throughput restored.",
+  "impact_services": [
+    "Telemetry-Feed-C"
+  ],
+  "duration_min": 18
+}

@@ -1,0 +1,11 @@
+{
+  "id": "INC-2024-0540",
+  "title": "Memory pressure on PE-Router-01",
+  "event_type": "MEM_PRESSURE",
+  "device": "PE-Router-01",
+  "summary": "Memory leak in a process led to malloc failures.",
+  "root_cause": "Software defect (memory leak).",
+  "resolution": "Reload during maintenance; upgraded image.",
+  "impact_services": [],
+  "duration_min": 30
+}

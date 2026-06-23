@@ -1,0 +1,11 @@
+{
+  "id": "INC-2025-0301",
+  "title": "Thermal shutdown of CORE-SW-1",
+  "event_type": "HARDWARE_FAULT",
+  "device": "CORE-SW-1",
+  "summary": "Fan failure led to thermal runaway and platform halt.",
+  "root_cause": "Failed fan tray.",
+  "resolution": "Drained traffic, RMA'd fan tray.",
+  "impact_services": [],
+  "duration_min": 50
+}

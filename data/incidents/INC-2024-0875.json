@@ -1,0 +1,13 @@
+{
+  "id": "INC-2024-0875",
+  "title": "BGP flap due to link instability",
+  "event_type": "BGP_SESSION_DOWN",
+  "device": "PE-Router-03",
+  "summary": "Marginal link caused BGP adjacency to flap repeatedly.",
+  "root_cause": "Marginal cable on the uplink.",
+  "resolution": "Stabilised interface; applied dampening.",
+  "impact_services": [
+    "VoIP-Trunk-A"
+  ],
+  "duration_min": 22
+}

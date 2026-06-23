@@ -1,0 +1,27 @@
+# Secrets & runtime artifacts — never commit
+.env
+data/runtime/
+data/models/*.gguf
+data/models/**/*.bin
+data/models/**/*.safetensors
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+*.coverage
+.coverage*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

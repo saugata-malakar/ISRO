@@ -1,0 +1,11 @@
+{
+  "id": "INC-2024-0612",
+  "title": "Ground station degradation averted by early warning",
+  "event_type": "CPU_SPIKE",
+  "device": "PE-Router-03",
+  "summary": "CPU trend forecast warned ~90s before BGP would have dropped; operator applied CoPP proactively.",
+  "root_cause": "Rising punted traffic.",
+  "resolution": "Pre-emptive CoPP; no service impact.",
+  "impact_services": [],
+  "duration_min": 0
+}

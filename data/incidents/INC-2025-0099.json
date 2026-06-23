@@ -1,0 +1,13 @@
+{
+  "id": "INC-2025-0099",
+  "title": "Fiber cut on P-Router-02 uplink",
+  "event_type": "LINK_DOWN",
+  "device": "P-Router-02",
+  "summary": "Physical fiber cut took LSP-12 down; no FRR configured on the segment.",
+  "root_cause": "Construction work severed the dark fiber.",
+  "resolution": "Manual reroute to redundant path; physical repair next day.",
+  "impact_services": [
+    "Ground-Station-Link-B"
+  ],
+  "duration_min": 240
+}

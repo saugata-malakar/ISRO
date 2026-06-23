@@ -1,0 +1,14 @@
+{
+  "id": "INC-2025-0143",
+  "title": "PE-Router-03 BGP down after CPU starvation",
+  "event_type": "BGP_SESSION_DOWN",
+  "device": "PE-Router-03",
+  "summary": "IP-Routing process starved the CPU (ramped to 99%); BGP neighbor 10.0.0.2 dropped on hold-timer expiry.",
+  "root_cause": "Punted traffic loop drove control-plane CPU to exhaustion, delaying BGP keepalives.",
+  "resolution": "clear ip bgp 10.0.0.2 soft restored the session; CoPP deployed to prevent recurrence.",
+  "impact_services": [
+    "Ground-Station-Link-B",
+    "VoIP-Trunk-A"
+  ],
+  "duration_min": 6
+}

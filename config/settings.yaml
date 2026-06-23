@@ -1,0 +1,101 @@
+# NeuraLink Copilot — all tunables. No magic numbers in code; everything is read
+# from here via src/neuralink/config.py (pydantic-settings). Env vars and a .env
+# file override these (prefix NEURALINK_, nested via __).
+
+env: demo
+seed: 42                      # global RNG seed — deterministic demos (README §1.7)
+
+paths:
+  data_dir: data
+  models_dir: data/models
+  runbooks_dir: data/runbooks
+  incidents_dir: data/incidents
+  runtime_dir: data/runtime
+  topology_file: config/topology.yaml
+
+simulator:
+  tick_seconds: 1.0           # wall-clock seconds between telemetry ticks (live mode)
+  time_compression: 10.0      # 1 tick == this many simulated seconds (demo speed)
+  jitter: 0.04               # Gaussian noise fraction around healthy baselines
+  baselines:                  # healthy operating point per metric
+    cpu_pct: 22.0
+    mem_pct: 45.0
+    temp_c: 38.0
+    if_errors: 0.0
+    bgp_peers_total: 4
+
+ingestion:
+  queue_maxsize: 10000
+  batch_commit: 1             # rows per DB commit (1 = immediate, demo-friendly)
+
+detection:
+  contamination: 0.02         # IsolationForest expected anomaly fraction
+  n_estimators: 200
+  warning_score: 60           # anomaly score (0-100) -> WARNING
+  critical_score: 85          # anomaly score (0-100) -> CRITICAL
+  correlation_window_s: 300   # sliding window (sim-seconds) for dedup / storm suppression
+  calibration:                # two-anchor linear map: raw IF score -> 0..100
+    low_pct: 50               # percentile of normal raw mapped to low_score
+    low_score: 8
+    high_pct: 98              # percentile of normal raw mapped to high_score
+    high_score: 55
+  forecast:
+    window: 8                 # samples used for the trend regression
+    horizon_s: 90             # how far ahead (sim-seconds) we project
+    cpu_warn_pct: 90          # projected CPU that triggers an early warning
+    min_slope: 0.1            # min %/sim-second slope to consider a real trend
+    temp_warn_c: 75.0
+    temp_min_slope: 0.1
+    errors_warn: 100.0
+    errors_min_slope: 1.0
+
+topology:
+  blast:
+    w_service_criticality: 0.55
+    w_service_count: 0.20
+    w_node_criticality: 0.25
+    eta_base_seconds: 30      # base degradation ETA used in estimates
+
+rag:
+  chunk_size: 700             # characters per chunk
+  chunk_overlap: 120
+  top_k: 5
+  embedding:
+    backend: hashing          # hashing | tfidf | sentence-transformers
+    dim: 384                  # vector dim for hashing/tfidf backends
+  index:
+    backend: auto             # auto | faiss | numpy  (auto -> faiss if installed)
+
+llm:
+  mock: true                  # true => deterministic offline template engine (no GGUF needed)
+  model_path: data/models/qwen2.5-3b-instruct-q4_k_m.gguf
+  fallback_model_path: data/models/qwen2.5-3b-instruct-q4_k_m.gguf
+  n_ctx: 4096
+  n_gpu_layers: 0             # default CPU (4GB VRAM cannot hold 7B Q4 — README §2)
+  n_threads: 0               # 0 => auto
+  temperature: 0.2
+  max_tokens: 768
+  stream: true
+  json_retries: 1             # retry once on JSON parse failure (README §8 llm)
+
+security:
+  master_key_file: data/runtime/master.key
+  db_file: data/runtime/neuralink.db
+  audit_file: data/runtime/audit.log
+  faiss_file: data/runtime/rag.index.enc
+  jwt:
+    issuer: neuralink-copilot
+    ttl_seconds: 3600
+  roles: [admin, operator, read-only]
+
+api:
+  host: 127.0.0.1             # localhost bind only (README §8 api)
+  port: 8077
+
+web:
+  host: 127.0.0.1
+  port: 5000
+
+audit:
+  actor_default: ops_user_01
+  role_default: operator

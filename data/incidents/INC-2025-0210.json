@@ -1,0 +1,13 @@
+{
+  "id": "INC-2025-0210",
+  "title": "Interface flap on PE-Router-01",
+  "event_type": "INTERFACE_FLAP",
+  "device": "PE-Router-01",
+  "summary": "Failing SFP caused repeated up/down with rising CRC errors.",
+  "root_cause": "Degraded optic.",
+  "resolution": "Replaced SFP during maintenance window.",
+  "impact_services": [
+    "VoIP-Trunk-A"
+  ],
+  "duration_min": 35
+}

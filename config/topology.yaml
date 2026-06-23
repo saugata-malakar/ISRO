@@ -1,0 +1,26 @@
+# Simulated MPLS network (stands in for the real ISRO network — see README §2).
+# This is the single source of truth for the topology graph, LSPs, and services.
+# Coordinates (x,y) are for the optional web/topology map only.
+
+nodes:
+  - {id: PE-Router-01, type: PE,     asn: 65001, ip: 10.0.0.1, criticality: 0.90, x: 0.10, y: 0.50}
+  - {id: P-Router-02,  type: P,                  ip: 10.0.0.2, criticality: 0.70, x: 0.40, y: 0.35}
+  - {id: PE-Router-03, type: PE,     asn: 65001, ip: 10.0.0.3, criticality: 0.95, x: 0.70, y: 0.50}
+  - {id: CE-Router-07, type: CE,     asn: 65002, ip: 10.0.0.7, criticality: 0.60, x: 0.95, y: 0.50}
+  - {id: CORE-SW-1,    type: SWITCH,             ip: 10.0.1.1, criticality: 0.80, x: 0.40, y: 0.70}
+
+edges:
+  - {src: PE-Router-01, dst: P-Router-02,  link_type: physical, bandwidth_mbps: 10000, criticality: 0.80}
+  - {src: P-Router-02,  dst: PE-Router-03, link_type: physical, bandwidth_mbps: 10000, criticality: 0.90}
+  - {src: PE-Router-03, dst: CE-Router-07, link_type: physical, bandwidth_mbps: 1000,  criticality: 0.85}
+  - {src: PE-Router-01, dst: CORE-SW-1,    link_type: physical, bandwidth_mbps: 10000, criticality: 0.70}
+  - {src: CORE-SW-1,    dst: PE-Router-03, link_type: physical, bandwidth_mbps: 10000, criticality: 0.75}
+
+lsps:
+  - {id: LSP-12, path: [PE-Router-01, P-Router-02, PE-Router-03], services: [VoIP-Trunk-A, Ground-Station-Link-B]}
+  - {id: LSP-15, path: [PE-Router-03, CE-Router-07],              services: [Telemetry-Feed-C]}
+
+services:
+  - {id: Ground-Station-Link-B, criticality: 1.00, lsps: [LSP-12]}
+  - {id: VoIP-Trunk-A,          criticality: 0.70, lsps: [LSP-12]}
+  - {id: Telemetry-Feed-C,      criticality: 0.95, lsps: [LSP-15]}

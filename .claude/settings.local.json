@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(py --version)",
+      "Bash(python -m pip --version)",
+      "Bash(make --version)",
+      "Bash(python -m pip list)",
+      "PowerShell(Write-Output \"=== where python ===\"; \\(Get-Command python -All -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\\); Write-Output \"=== py launcher ===\"; \\(Get-Command py -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\\); try { py -0p } catch { Write-Output \"py launcher not available\" }; Write-Output \"=== common locations ===\"; @\\(\"$env:LOCALAPPDATA\\\\Programs\\\\Python\",\"C:\\\\Python311\",\"C:\\\\Python312\",\"C:\\\\Python310\",\"$env:ProgramFiles\\\\Python311\"\\) | ForEach-Object { if \\(Test-Path $_\\) { Get-ChildItem $_ -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName } })",
+      "PowerShell(Write-Output \"=== uv ===\"; \\(Get-Command uv -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\\); try { uv --version } catch { Write-Output \"uv not on PATH\" }; Write-Output \"=== base uv python ===\"; $base=\"C:\\\\Users\\\\TUF\\\\AppData\\\\Roaming\\\\uv\\\\python\\\\cpython-3.11-windows-x86_64-none\\\\python.exe\"; if \\(Test-Path $base\\){ & $base --version; & $base -m pip --version 2>&1 } else { Write-Output \"base python.exe not at expected path\"; Get-ChildItem \"C:\\\\Users\\\\TUF\\\\AppData\\\\Roaming\\\\uv\\\\python\" -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name })",
+      "PowerShell(uv venv *)",
+      "PowerShell(uv pip *)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -c \"from neuralink.config import get_settings; from neuralink import schemas; s=get_settings\\(\\); print\\('seed=', s.seed, 'llm.mock=', s.llm.mock, 'warn=', s.detection.warning_score\\); print\\('root=', s.root\\); print\\('topology_file exists=', s.topology_file.exists\\(\\)\\); ev=schemas.NetworkEvent\\(source_device='PE-Router-03', source_ip='10.0.0.3'\\); print\\('event ok:', ev.event_type, ev.event_id[:8]\\)\")",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m neuralink.cli run-sim --scenario cpu_starvation --ticks 24 --fast --seed 42 2>&1 | Select-Object -First 60)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m neuralink.cli train 2>&1 | Select-Object -Last 6)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m neuralink.cli seed 2>&1)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m neuralink.cli index 2>&1)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m neuralink.cli verify-airgap 2>&1)",
+      "PowerShell($env:PYTHONIOENCODING=\"utf-8\"; & \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m neuralink.cli demo --scenario cpu_starvation --seed 42 --fast 2>&1 | Select-Object -First 80)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m neuralink.cli train 2>&1)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m pytest -q 2>&1 | Select-Object -Last 40)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m pytest -q 2>&1 | Select-Object -Last 20)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m pytest -q 2>&1)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m ruff check src scripts tests 2>&1)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m ruff check src scripts tests --fix 2>&1 | Select-Object -Last 6)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m ruff check src scripts tests 2>&1 | Select-Object -Last 8)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m mypy 2>&1 | Select-Object -Last 40)",
+      "PowerShell(& \"D:\\\\ISRO\\\\.venv\\\\Scripts\\\\python.exe\" -m mypy 2>&1)"
+    ]
+  }
+}
