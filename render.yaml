@@ -3,7 +3,7 @@ services:
     name: neuralink-copilot
     env: python
     plan: free
-    buildCommand: "pip install .[web] gunicorn && python -m neuralink.cli seed --force && python -m neuralink.cli train && python -m neuralink.cli index"
+    buildCommand: "pip install -e .[web] gunicorn && python -m neuralink.cli seed --force && python -m neuralink.cli train && python -m neuralink.cli index"
     startCommand: "gunicorn wsgi:app"
     envVars:
       - key: NEURALINK_LLM_MOCK
